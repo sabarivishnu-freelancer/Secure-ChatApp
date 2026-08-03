@@ -16,6 +16,25 @@ jobs:
         with:
           channel: 'stable'
 
+      - name: Validate required secrets
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          missing=0
+          for name in SUPABASE_URL SUPABASE_ANON_KEY NETLIFY_AUTH_TOKEN NETLIFY_SITE_ID; do
+            if [ -z "${!name}" ]; then
+              echo "❌ Secret $name is not set."
+              missing=1
+            fi
+          done
+          if [ "$missing" -eq 1 ]; then
+            echo "Set repository secrets in Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+
       - name: Install dependencies
         run: |
           cd "${{ github.workspace }}"
