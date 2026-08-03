@@ -1,0 +1,10 @@
+[build]
+  command = "flutter build web --release"
+  publish = "build/web"
+
+[context.production.environment]
+  # These values should be provided in Netlify site settings or via GitHub Actions secrets.
+  # Since we deploy a prebuilt site from GitHub Actions, Netlify's build step is skipped during CI.
+  # Use these environment variables if you also want Netlify to build the site from the UI or webhooks.
+  SUPABASE_URL = "${SUPABASE_URL}"
+  SUPABASE_ANON_KEY = "${SUPABASE_ANON_KEY}"
