@@ -1,6 +1,11 @@
 [build]
-  command = "flutter build web --release"
+  command = "flutter build web --release --dart-define=SUPABASE_URL=${SUPABASE_URL} --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}"
   publish = "build/web"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
 
 [context.production.environment]
   # These values should be provided in Netlify site settings or via GitHub Actions secrets.

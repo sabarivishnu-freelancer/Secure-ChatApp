@@ -40,6 +40,11 @@ jobs:
           cd "${{ github.workspace }}"
           flutter pub get
 
+      - name: Run Flutter tests
+        run: |
+          cd "${{ github.workspace }}"
+          flutter test
+
       - name: Build web release
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
